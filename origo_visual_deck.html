@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Origo — Visual Investor Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#0A0E1A;--ink2:#161B2A;--paper:#FAF8F4;--paper2:#F1EDE3;--bronze:#B89968;--bronzeDark:#8B6F47;--line:#D8D0BE;--muted:#7A8190;--good:#2D6A4F;--warn:#B45309;--bad:#991B1B;}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,sans-serif;background:var(--ink);color:var(--paper);overflow:hidden}
+    .deck{height:100vh;display:flex;align-items:center;justify-content:center;padding:2vh}
+    .slide{display:none;position:relative;width:min(94vw,160vh);aspect-ratio:16/9;background:linear-gradient(155deg,var(--ink),var(--ink2));border:1px solid #2b3246;border-radius:26px;overflow:hidden;padding:2.2rem;box-shadow:0 40px 80px rgba(0,0,0,.45)}
+    .slide.active{display:block}
+    h1,h2,h3{font-family:Fraunces,serif;font-weight:600;line-height:1.06;margin:.1rem 0;color:var(--paper)}
+    h1{font-size:3.1rem} h2{font-size:2.2rem} p{color:#d6d3cc}
+    .muted{color:var(--muted)} .accent{color:var(--bronze)}
+    .topline{letter-spacing:.16em;text-transform:uppercase;font-size:.72rem;color:#c9b59b}
+    .kpis{display:flex;gap:1rem;position:absolute;bottom:1.2rem;left:2.2rem;right:2.2rem}
+    .kpi{flex:1;border:1px solid #3a3f4f;padding:.8rem;border-radius:10px;background:rgba(255,255,255,.02)}
+    .kpi b{font-size:1.1rem;color:var(--bronze)}
+    .foot{position:absolute;bottom:.55rem;right:1rem;font-size:.6rem;color:#8f96a8}
+    .gridbg{position:absolute;inset:0;background:radial-gradient(circle at 20% 20%,rgba(184,153,104,.16),transparent 35%),repeating-linear-gradient(90deg,transparent 0 58px,rgba(255,255,255,.03) 58px 59px),repeating-linear-gradient(180deg,transparent 0 58px,rgba(255,255,255,.03) 58px 59px)}
+    .orbits svg,.fullsvg{position:absolute;inset:0;width:100%;height:100%}
+    .titlewrap{position:relative;z-index:2;max-width:70%}
+    .islands{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem}
+    .island{border:1px solid #3a4258;border-radius:16px;padding:1rem;background:rgba(255,255,255,.02);position:relative;min-height:120px}
+    .dots{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin-top:.6rem}
+    .dots span{width:9px;height:9px;border-radius:50%;background:#8a93a8}
+    .hero-num{font-size:5rem;font-family:Fraunces,serif;color:var(--bronze)}
+    .ring{width:220px;height:220px;border-radius:50%;background:conic-gradient(var(--bronze) 0 24deg,#353c51 24deg 360deg);position:relative}
+    .ring:after{content:"6–7%";position:absolute;inset:24px;border-radius:50%;background:var(--ink2);display:flex;align-items:center;justify-content:center;font:600 2rem Fraunces,serif;color:var(--paper)}
+    .cols4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1rem}
+    .col{border:1px solid #41485d;border-radius:14px;padding:1rem;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.01));height:70%}
+    .stack{display:grid;gap:1rem;margin-top:1.2rem}
+    .layer{padding:1.2rem;border-radius:14px;border:1px solid #585f70;background:rgba(255,255,255,.03);position:relative}
+    .layer:after{content:"";position:absolute;left:50%;bottom:-13px;width:2px;height:12px;background:var(--bronze)}
+    .layer:last-child:after{display:none}
+    .flow{display:grid;grid-template-columns:1fr .8fr 1fr;gap:1rem;align-items:center;margin-top:1rem}
+    .panel{border:1px solid #4a5268;border-radius:14px;padding:1rem;background:rgba(255,255,255,.02);min-height:260px}
+    .chip{display:inline-block;padding:.25rem .55rem;border-radius:99px;border:1px solid #596078;font-size:.72rem;margin:.18rem 0}
+    .split{display:grid;grid-template-columns:1fr 150px 1fr;gap:1rem;margin-top:1rem;align-items:center}
+    .bad li{color:#f1b6b6}.good li{color:#cae7d6}
+    .mock-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1rem}
+    .mock{background:var(--paper);color:#20263a;border-radius:12px;padding:.9rem;border:1px solid #d1c8b5;min-height:165px}
+    .engines{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1rem}.engine{padding:1rem;border:1px solid #6a604e;border-radius:50px 18px 18px 50px;background:rgba(184,153,104,.1)}
+    .calc{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-top:1rem}.card{border:1px solid #4b5163;border-radius:14px;padding:1rem;background:rgba(255,255,255,.02)}
+    .rings{position:relative;height:420px;display:flex;align-items:center;justify-content:center}.r{position:absolute;border:1px solid #6e6658;border-radius:50%}
+    .r1{width:140px;height:140px}.r2{width:240px;height:240px}.r3{width:340px;height:340px}.r4{width:430px;height:430px}
+    .fly{position:relative;height:430px}.cycle{position:absolute;inset:65px;border:1px dashed #8d7650;border-radius:50%}
+    .node{position:absolute;background:var(--paper2);color:#1a2234;border-radius:14px;padding:.5rem .8rem;font-size:.8rem}
+    .matrix{position:relative;height:420px;border-left:2px solid #c0b090;border-bottom:2px solid #c0b090;margin:1.2rem}.dot{position:absolute;padding:.35rem .55rem;border-radius:10px;background:#30384f;border:1px solid #77809a;font-size:.72rem}
+    .timeline{display:flex;gap:.8rem;margin-top:1.2rem}.mil{flex:1;border:1px solid #5a6073;border-radius:16px;padding:1rem;position:relative}.mil:before{content:"";position:absolute;top:-10px;left:1rem;width:18px;height:18px;border-radius:50%;background:var(--bronze)}
+    .fund{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1rem}.f{padding:1rem;border:1px solid #6d6658;border-radius:12px;background:rgba(184,153,104,.09)}
+    .nav{position:fixed;right:16px;bottom:16px;display:flex;gap:.5rem;z-index:99}.nav button{background:#1f2638;color:#f3efe6;border:1px solid #4d566f;padding:.6rem .8rem;border-radius:10px;cursor:pointer}
+    .print{position:fixed;left:16px;bottom:16px;z-index:99}
+    @media (max-width: 900px){body{overflow:auto}.deck{height:auto;display:block;padding:0}.slide{display:block;aspect-ratio:auto;width:100%;min-height:72vh;border-radius:0}.nav,.print{display:none}}
+    @media print{body{overflow:visible;background:#fff}.nav,.print{display:none}.deck{display:block;padding:0}.slide{display:block;page-break-after:always;width:100%;height:100vh;border-radius:0;box-shadow:none}}
+  </style>
+</head>
+<body>
+<button class="print nav" style="left:16px;right:auto" onclick="window.print()">Print / PDF</button>
+<div class="deck" id="deck">
+  <section class="slide active"><div class="gridbg"></div><div class="orbits fullsvg"><svg viewBox="0 0 1600 900"><g fill="none" stroke="#7f6b48" opacity=".35"><circle cx="1200" cy="260" r="260"/><circle cx="1200" cy="260" r="180"/><circle cx="1200" cy="260" r="100"/></g><g fill="#b89968"><circle cx="1200" cy="260" r="7"/><circle cx="1320" cy="360" r="5"/></g></svg></div><div class="titlewrap"><div class="topline">ORIGO</div><h1>Инфраструктура донорских программ ВРТ</h1><p>Контролируемая сеть подбора между клиниками без превращения доноров в товар.</p></div><div class="kpis"><div class="kpi"><b>114k+</b><div>циклов ЭКО / год</div></div><div class="kpi"><b>7–8k</b><div>donor-oocyte циклов</div></div><div class="kpi"><b>200+</b><div>клиник ВРТ</div></div></div></section>
+  <section class="slide"><h2>Клиники работают с изолированными донорскими базами</h2><div class="islands"><div class="island">Clinic A<div class="dots"></div></div><div class="island">Clinic B<div class="dots"></div></div><div class="island">Clinic C<div class="dots"></div></div><div class="island">Clinic D<div class="dots"></div></div><div class="island">Clinic E<div class="dots"></div></div><div class="island">Clinic F<div class="dots"></div></div></div><div class="foot">Локальные пулы 10–30 доноров; межклинической ликвидности почти нет.</div></section>
+  <section class="slide"><div style="display:flex;justify-content:space-between;align-items:center"><div><div class="topline">MARKET REALITY</div><div class="hero-num">114 593</div><p>циклов ЭКО в год (РФ)</p><p class="accent">114k × 6–7% ≈ 7–8k donor-oocyte</p></div><div class="ring"></div></div><p style="margin-top:1rem">Рынок уже существует. Инфраструктурного слоя взаимодействия между клиниками нет.</p><div class="foot">Источники: агрегированные отраслевые оценки, данные ЭКО/ОМС.</div></section>
+  <section class="slide"><h2>Почему именно сейчас</h2><div class="cols4"><div class="col">🧭<h3>Демография</h3></div><div class="col">⚖️<h3>Регулирование</h3></div><div class="col">🧩<h3>Фрагментированные workflows</h3></div><div class="col">🤖<h3>AI-native разработка дешевле</h3></div></div></section>
+  <section class="slide"><h2>Origo Solution Stack</h2><div class="stack"><div class="layer"><b>Patient + Analytics Layer</b><div class="muted">Assisted navigation, de-identified analytics, regional planning</div></div><div class="layer"><b>Controlled Cross-Clinic Matching</b><div class="muted">Permissioned workflow, approved options, legal traceability</div></div><div class="layer"><b>Clinic Donor OS</b><div class="muted">Donor CRM, screening states, docs, coordinator workflow, audit trail</div></div></div></section>
+  <section class="slide"><h2>Controlled Cross-Clinic Matching Flow</h2><div class="flow"><div class="panel"><h3>Clinic A</h3><p>Пациент есть, подходящего донора нет.</p><span class="chip">Request created</span><span class="chip">Medical constraints</span></div><div style="text-align:center"><div class="chip" style="border-color:#b89968;color:#e8d4b0">Origo matching layer</div><svg width="180" height="120"><path d="M10,60 C60,20 120,100 170,60" stroke="#b89968" fill="none" stroke-width="3"/><circle cx="88" cy="58" r="8" fill="#b89968"/></svg><div class="chip">Permission gate</div></div><div class="panel"><h3>Clinic B</h3><p>Подтверждает approved donor option в регулируемом workflow.</p><span class="chip">Approved option</span><span class="chip">Clinic-controlled handoff</span></div></div></section>
+  <section class="slide"><h2>Почему это не donor trading</h2><div class="split"><div class="panel bad"><h3>Не делаем</h3><ul><li>не продаём биоматериал</li><li>не оказываем медуслуги</li><li>не подменяем клинику</li><li>не открываем marketplace</li></ul></div><div style="font-size:4rem;text-align:center">🔒</div><div class="panel good"><h3>Делаем</h3><ul><li>workflow software</li><li>permissioned matching</li><li>audit trail</li><li>service / infrastructure fee</li></ul></div></div></section>
+  <section class="slide"><h2>Product Mockups</h2><div class="mock-grid"><div class="mock"><b>Donor CRM table</b><hr><div style="height:90px;background:linear-gradient(#ece6d8,#f8f5ee)"></div></div><div class="mock"><b>Coordinator dashboard</b><hr><div style="height:90px;background:linear-gradient(90deg,#efe8d8 20%,#f8f4ec 20%)"></div></div><div class="mock"><b>Matching request panel</b><hr><div style="height:90px;background:linear-gradient(135deg,#f5efe3,#ebe2cd)"></div></div><div class="mock"><b>Audit / compliance trail</b><hr><div style="height:90px;background:repeating-linear-gradient(180deg,#f8f5ee 0 14px,#ede6d8 14px 16px)"></div></div></div></section>
+  <section class="slide"><h2>Business Model: 4 Revenue Engines</h2><div class="engines"><div class="engine">SaaS subscription</div><div class="engine">Implementation fee</div><div class="engine">Cross-match service fee</div><div class="engine">Analytics contracts</div></div></section>
+  <section class="slide"><h2>Unit Economics Calculator</h2><div class="calc"><div class="card"><b>Inputs</b><p>200k ₽ SaaS / мес</p><p>330k ₽ avg donor program</p><p>4% service fee</p><p>5 matches / мес</p></div><div class="card"><b>Calculation</b><p>200k + (330k × 0.04 × 5)</p><p class="accent" style="font-size:2rem">= 266k ₽</p></div><div class="card"><b>Output</b><p style="font-size:1.3rem">≈ 266k ₽ revenue / clinic / month</p></div></div></section>
+  <section class="slide"><h2>Market Expansion Rings</h2><div class="rings"><div class="r r4"></div><div class="r r3"></div><div class="r r2"></div><div class="r r1"></div><div style="position:absolute">Core: donor oocytes</div><div style="position:absolute;top:18%;left:16%">Adjacent: sperm, embryos, cryo, surrogacy</div><div style="position:absolute;bottom:20%;right:14%">Geo: СНГ → MENA → Европа</div><div style="position:absolute;bottom:10%;left:26%">Future: high-trust medical workflows</div></div></section>
+  <section class="slide"><h2>Moat Flywheel</h2><div class="fly"><div class="cycle"></div><div class="node" style="left:42%;top:3%">More clinics</div><div class="node" style="right:5%;top:35%">More donor liquidity</div><div class="node" style="left:40%;bottom:5%">Higher clinic ROI</div><div class="node" style="left:3%;top:35%">Higher match probability</div><div class="node" style="left:16%;top:12%">network moat</div><div class="node" style="right:13%;top:16%">trust moat</div><div class="node" style="right:14%;bottom:14%">compliance moat</div><div class="node" style="left:12%;bottom:12%">data moat</div></div></section>
+  <section class="slide"><h2>Competitive Map</h2><div class="matrix"><div class="dot" style="left:12%;bottom:14%">spreadsheets</div><div class="dot" style="left:32%;bottom:38%">generic MIS</div><div class="dot" style="left:56%;bottom:44%">small intermediaries</div><div class="dot" style="left:70%;bottom:66%">large ecosystems</div><div class="dot" style="left:78%;bottom:80%;background:#b89968;color:#1f1a12">Origo</div><div style="position:absolute;left:-34px;top:-8px;transform:rotate(-90deg);font-size:.8rem">infrastructure depth</div><div style="position:absolute;right:8px;bottom:-28px;font-size:.8rem">vertical specialization →</div></div></section>
+  <section class="slide"><h2>90-Day Validation Plan</h2><div class="timeline"><div class="mil"><b>Day 0–30</b><p>10 clinic + 5 coordinator + 3 legal interviews; 2 LOIs; manual match simulation</p></div><div class="mil"><b>Day 31–60</b><p>Prototype, legal memo, pilot workflow design</p></div><div class="mil"><b>Day 61–90</b><p>First pilot, pricing validation, first real usage</p></div></div></section>
+  <section class="slide"><h2>Funding Strategy</h2><p style="font-size:1.4rem" class="accent">Капиталоёмкость разработки низкая. Капиталоёмкость доверия высокая.</p><div class="fund"><div class="f">tiny pre-seed / angels</div><div class="f">grants</div><div class="f">pilot revenue</div><div class="f">seed after validation</div></div><p class="muted">Не biotech/hardware R&D risk. Главный риск: доверие клиник и legal framework.</p></section>
+  <section class="slide"><div class="gridbg"></div><div style="position:relative;z-index:2;max-width:74%"><h1>Origo connects the system without commoditizing people.</h1><h2 style="margin-top:1rem">Инфраструктура доверенных репродуктивных сетей</h2><p>Ask: 15–25 млн ₽ pre-seed</p><p>Цель: legal model, pilot MVP, clinic LOIs, prove clinic ROI, first cross-clinic workflow.</p></div></section>
+</div>
+<div class="nav"><button id="prev">←</button><button id="next">→</button></div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let i=0;
+const donorCounts=[16,18,12,14,11,20];
+document.querySelectorAll('.islands .dots').forEach((el,idx)=>{el.innerHTML='<span></span>'.repeat(donorCounts[idx]||12);});
+function show(n){i=(n+slides.length)%slides.length;slides.forEach((s,idx)=>s.classList.toggle('active',idx===i));}
+document.getElementById('prev').onclick=()=>show(i-1);document.getElementById('next').onclick=()=>show(i+1);
+window.addEventListener('keydown',e=>{if(window.innerWidth<900)return;if(['ArrowRight',' '].includes(e.key)){e.preventDefault();show(i+1)}if(e.key==='ArrowLeft'){e.preventDefault();show(i-1)}});
+</script>
+</body>
+</html>

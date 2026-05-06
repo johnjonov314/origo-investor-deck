@@ -1,0 +1,12 @@
+{
+  "name": "origo-investor-deck",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "python -m http.server 5173",
+    "build": "node build.mjs",
+    "preview": "python -m http.server 4173 -d dist",
+    "export:pdf": "echo 'Use browser print to PDF'"
+  }
+}

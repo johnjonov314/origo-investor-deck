@@ -1,0 +1,11 @@
+*{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--paper);color:var(--ink)}
+.deck.desktop{height:100vh;display:grid;place-items:center;padding:24px}
+.slide{width:min(1440px,95vw);aspect-ratio:16/9;background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:48px;display:flex}
+.slide.dark{background:linear-gradient(140deg,var(--ink),var(--ink-2));color:#f8f4ea}
+.slide h1{font-family:Fraunces,Georgia,serif;font-size:clamp(34px,4vw,64px);margin:8px 0 16px}
+.sub{font-size:20px;max-width:60ch}.slide ul{font-size:20px;line-height:1.5}
+.kicker{font-size:12px;letter-spacing:.08em;color:var(--bronze);text-transform:uppercase}
+.nav{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);display:flex;gap:14px;align-items:center;background:#fff8;border:1px solid var(--line);padding:8px 12px;border-radius:999px;backdrop-filter:blur(8px)}
+button{border:none;border-radius:999px;padding:6px 10px}
+.deck.mobile{padding:12px;display:flex;flex-direction:column;gap:12px}.deck.mobile .slide{width:100%;aspect-ratio:auto;min-height:unset;padding:24px;border-radius:18px}
+.sources{font-size:12px;margin-top:auto;opacity:.9}

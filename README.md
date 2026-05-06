@@ -17,3 +17,6 @@ npm run export:pdf
 
 PDF export:
 Open the deck in Chrome → Print → Save as PDF → enable Background graphics.
+
+
+Build output directory: `dist/` (for Vercel deploys).

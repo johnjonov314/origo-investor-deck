@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "python -m http.server 5173",
-    "build": "echo 'Static deck build: no bundling required'",
-    "preview": "python -m http.server 4173",
+    "build": "node build.mjs",
+    "preview": "python -m http.server 4173 -d dist",
     "export:pdf": "echo 'Use browser print to PDF'"
   }
 }

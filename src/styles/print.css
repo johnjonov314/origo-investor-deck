@@ -1,0 +1,4 @@
+@page{size:A4 landscape;margin:10mm}
+.nav{display:none!important}
+.deck{display:block!important}
+.slide{break-after:page;page-break-after:always;width:100%!important;min-height:180mm;aspect-ratio:auto;border:none}

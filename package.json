@@ -1,0 +1,12 @@
+{
+  "name": "origo-investor-deck",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "python -m http.server 5173",
+    "build": "echo 'Static deck build: no bundling required'",
+    "preview": "python -m http.server 4173",
+    "export:pdf": "echo 'Use browser print to PDF'"
+  }
+}
